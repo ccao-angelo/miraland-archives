@@ -1,0 +1,233 @@
+/* IMPORTS & VARIABLES */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Quicksand:wght@400;600;700&display=swap');
+
+:root {
+  --nikki-pink: #ffb6c1;
+  --nikki-dark-pink: #ff69b4;
+  --nikki-gold: #d4af37;
+  --nikki-bg: #fdfbf7;
+  --text-main: #4a4a4a;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --magical-shadow: 0 8px 32px 0 rgba(255, 182, 193, 0.3);
+}
+
+/* GLOBAL STYLES & BACKGROUND */
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #f0f8ff 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--nikki-dark-pink);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+/* CUSTOM SCROLLBAR */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #fff0f5;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--nikki-pink);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--nikki-dark-pink);
+}
+
+/* CUSTOM CURSOR */
+html {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ffb6c1" stroke="%23ff69b4" stroke-width="1.5" d="M12 0l2.5 9.5 9.5 2.5-9.5 2.5-2.5 9.5-2.5-9.5-9.5-2.5 9.5-2.5 2.5-9.5z"/></svg>') 12 12, auto !important;
+}
+a, button, select, input {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ffb6c1" stroke="%23ff69b4" stroke-width="1.5" d="M12 0l2.5 9.5 9.5 2.5-9.5 2.5-2.5 9.5-2.5-9.5-9.5-2.5 9.5-2.5 2.5-9.5z"/></svg>') 12 12, pointer !important;
+}
+
+/* BUTTON SYSTEM */
+.btn-miraland {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-miraland:hover {
+  transform: scale(1.05) translateY(-2px);
+}
+
+.btn-miraland:visited, .btn-miraland:active {
+  color: white !important;
+}
+
+/* NIKKI BUTTON */
+.btn-magical {
+  background: linear-gradient(45deg, var(--nikki-pink), var(--nikki-dark-pink));
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-magical:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+  border-color: var(--nikki-gold);
+}
+
+/* Modifier classes handle the colors */
+.btn-pink {
+  background: linear-gradient(45deg, #ffb6c1, #ff69b4);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+}
+
+.btn-red {
+  background: linear-gradient(45deg, #ff4d4d, #c0392b);
+  color: white;
+  box-shadow: 0 4px 15px rgba(192, 57, 43, 0.4);
+}
+
+.btn-gold {
+  background: linear-gradient(45deg, #f1c40f, #d4af37);
+  color: white;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+/* GLASSMORPHISM CARDS */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 15px;
+  box-shadow: var(--magical-shadow);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px 0 rgba(255, 182, 193, 0.5);
+  border-color: var(--nikki-pink);
+}
+
+/* Input Field */
+input, select, textarea {
+  font-family: 'Quicksand', sans-serif;
+  border: 2px solid #ffe4e1;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--nikki-dark-pink);
+  box-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+}
+
+/* MAGICAL FLOATING ANIMATION */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(0.5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.floating-archive {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* NAVBAR RESPONSIVENESS */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--nikki-gold);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.0.5);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  gap: 1rem;
+}
+
+.navbar-logo {
+  margin: 0;
+  font-size: 1.8rem;
+  white-space: nowrap;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* TOAST NOTIFICATION */
+.toast-notification {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-left: 5px solid var(--nikki-dark-pink);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+  color: var(--text-main);
+  z-index: 9999;
+  animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), fadeOut 0.5s ease-in 2.5s forwards;
+}
+
+@keyframes slideIn{ 
+  from { transform: translateX(120%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); visibility: hidden; }
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 650px) {
+  .navbar-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .navbar-links {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

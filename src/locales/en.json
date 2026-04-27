@@ -1,0 +1,60 @@
+{
+    "navbar": {
+        "home": "The Archives",
+        "create": "Add to Archive"
+    },
+    "form": {
+        "title": "Suit Name / Post Title",
+        "lore": "Lore, Strategy, or Description",
+        "upload": "Upload Screenshot",
+        "category": "What are you sharing",
+        "cat_arena": "Arena Guide",
+        "cat_comp": "Competition",
+        "cat_cosplay": "Cosplay",
+        "cat_lore": "Item Lore",
+        "select_theme": "Select Theme",
+        "attributes": "Attributes:",
+        "nation": "Select Nation",
+        "secret_key": "Stylist Secret Code (to edit/delete later)",
+        "submit": "Publish to Archives"
+    },
+    "feed": {
+        "loading": "✨ Summoning Archives...",
+        "sort_new": "Newest Discoveries",
+        "sort_top": "Top Upvoted",
+        "filter_all": "All Nations",
+        "upvotes": "Styling Power",
+        "read_more": "View Archive",
+        "search": "Search by Title..."
+    },
+    "detail": {
+        "delete": "Burn Record (Delete)",
+        "edit": "Revise Archive (Edit)",
+        "save": "Save Changes",
+        "cancel": "Cancel",
+        "upvote": "Resonate (Upvote)",
+        "comments": "Stylist Comments",
+        "add_comment": "Leave a Comment...",
+        "submit_comment": "Post Comment",
+        "prompt_key": "Enter your Stylist Secret Code to delete this archive:",
+        "wrong_key": "Incorrect Secret Code! The archive remains safe."
+    },
+    "nations": {
+        "Apple": "Apple Federal 🍎",
+        "Lilith": "Lilith Kingdom 🎀",
+        "Cloud": "Cloud Empire ☁️",
+        "Wasteland": "Republic of Wasteland 🍂",
+        "Ruin": "Ruin Island 🤖",
+        "Pigeon": "Pigeon Kingdom 🕊️",
+        "North": "North Kingdom ⚔️"
+    },
+    "date": {
+        "posted": "Posted on"
+    },
+    "categories": {
+        "Lore": "Item Lore",
+        "Arena": "Arena Guide",
+        "Competition": "Competition",
+        "Cosplay": "Cosplay"
+    }
+}

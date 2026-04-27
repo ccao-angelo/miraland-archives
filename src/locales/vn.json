@@ -1,0 +1,60 @@
+{
+    "navbar": {
+        "home": "Trạm Lưu Trữ",
+        "create": "Thêm Lưu Trữ"
+    },
+    "form": {
+        "title": "Tên Trang Phục / Tiêu đề",
+        "lore": "Cốt truyện, Chiến thuật, hoặc Mô tả",
+        "upload": "Tải Ảnh Lên",
+        "category": "Bạn muốn chia sẻ điều gì?",
+        "cat_arena": "Khu Thi Đấu",
+        "cat_comp": "Khu Bình Chọn",
+        "cat_cosplay": "Hóa Trang",
+        "cat_lore": "Cốt Truyện",
+        "select_theme": "Chọn Chủ Đề",
+        "attributes": "Thuộc Tính:",
+        "nation": "Chọn Vương Quốc",
+        "secret_key": "Mã Bí Mật (để sửa/xóa sau này)",
+        "submit": "Đăng Tải"
+    },
+    "feed": {
+        "loading": "✨ Đang tải dữ liệu...",
+        "sort_new": "Mới Nhất",
+        "sort_top": "Nhiều Lượt Thích Nhất",
+        "filter_all": "Tất Cả Vương Quốc",
+        "upvotes": "Điểm Phối Đồ",
+        "read_more": "Xem Chi Tiết",
+        "search": "Tìm kiếm theo tên..."
+    },
+    "detail": {
+        "delete": "Xóa Lưu Trữ",
+        "edit": "Sửa Lưu Trữ",
+        "save": "Lưu Thay Đổi",
+        "cancel": "Hủy Bỏ",
+        "upvote": "Thả Tim",
+        "comments": "Bình Luận",
+        "add_comment": "Viết Bình Luận...",
+        "submit_comment": "Gửi",
+        "prompt_key": "Nhập Mã Bí Mật để xóa lưu trữ này:",
+        "wrong_key": "Sai Mã Bí Mật! Không thể xóa."
+    },
+    "nations": {
+        "Apple": "Liên Bang Táo Đỏ 🍎",
+        "Lilith": "Vương Quốc Lilith 🎀",
+        "Cloud": "Vương Quốc Chân Mây ☁️",
+        "Wasteland": "Vương Quốc Đồng Cỏ 🍂",
+        "Ruin": "Đảo Tương Lai 🤖",
+        "Pigeon": "Vương Quốc Bồ Câu 🕊️",
+        "North": "Vương Quốc Bờ Bắc ⚔️"
+    },
+    "date": {
+        "posted": "Đăng ngày"
+    },
+    "categories": {
+        "Lore": "Cốt Truyện",
+        "Arena": "Khu Thi Đấu",
+        "Competition": "Khu Bình Chọn",
+        "Cosplay": "Hóa Trang"
+    }
+}
