@@ -67,7 +67,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='[https://i.imgur.com/zGE3M9Q.gif](https://github.com/user-attachments/assets/c9a3fe5f-dd6b-409f-9b5b-dedd88dfe955)' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='(https://github.com/user-attachments/assets/c9a3fe5f-dd6b-409f-9b5b-dedd88dfe955)' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [ScreenToGif](https://www.screentogif.com/) for Windows
 
