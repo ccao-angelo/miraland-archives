@@ -44,8 +44,16 @@ export default function CreatePost() {
             .from ('suit_images')
             .getPublicUrl(fileName);
 
-        // 3. Save to database
-        const { error: insertError } = await supabase
+        // 3. Get the current logged-in user securely
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (!user) {
+            alert("You must be logged in to create an archive!");
+            return;
+        }
+
+        // 4. Save to database
+        const { error } = await supabase
             .from ('lore_posts')
             .insert([{
                 title,
@@ -54,11 +62,11 @@ export default function CreatePost() {
                 category,
                 theme_name: category === 'Arena' ? themeId : null,
                 nation_flag: nation,
-                secret_key: secretKey
+                user_id: user.id
             }]);
 
-        if (insertError) {
-            console.error("Database insert error:", insertError);
+        if (error) {
+            console.error("Database insert error:", error);
             alert("Error saving post. Check console.");
         } else {
             setToastMessage("✨ Successfully Added to The Archives!");
@@ -113,7 +121,16 @@ export default function CreatePost() {
 
                 <input type="text" placeholder={t('form.title')} required onChange={(e) => setTitle(e.target.value)} style={{ padding: '0.5rem' }}/>
 
-                <textarea placeholder={t('form.lore')} rows="4" required onChange={(e) => setContent(e.target.value)} style={{ padding: '0.5rem' }}></textarea>
+                <div style={{ background: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px', overflow: 'hidden' }}>
+                    <textarea
+                        placeholder={t('form.lore')}
+                        rows="4"
+                        required
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        style={{ padding: '0.5rem', width: '100%' }}
+                    ></textarea>
+                </div>
 
                 <select  value={nation} onChange={(e) => setNation(e.target.value)} style={{ padding: '0.5rem' }}>
                     <option value="Apple">{t('nations.Apple')}</option>
@@ -126,8 +143,6 @@ export default function CreatePost() {
                 </select>
 
                 <input type="file" accept="image/*" required onChange={(e) => setFile(e.target.files[0])} />
-
-                <input type="password" placeholder={t('form.secret_key')} required onChange={(e) => setSecretKey(e.target.value)} style={{ padding: '0.5rem' }}/>
 
                 <button type="submit" className="btn-magical "style={{ padding: '0.75rem', background: '#ffb6c1', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
                     {t('form.submit')}

@@ -1,3 +1,4 @@
+import Tilt from 'react-parallax-tilt';
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +18,7 @@ export default function Home() {
     const [orderBy, setOrderBy] = useState('created_at');
     const [filterNation, setFilterNation] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
+    const [visibleCount, setVisibleCount] = useState(6);
 
     useEffect(() => {
         fetchPosts();
@@ -24,6 +26,7 @@ export default function Home() {
 
     const fetchPosts = async () => {
         setIsLoading(true); // Trigger loading animation
+        setVisibleCount(6);
 
         // Start building the Supabase query
         let query = supabase.from('lore_posts').select();
@@ -103,8 +106,19 @@ export default function Home() {
                     {posts.length === 0 ? (
                         <p>No archives found. Be the first to add one!</p>
                     ) : (
-                        posts.map((post) => (
-                            <div key={post.id} className="glass-card floating-archive">
+                        posts.slice(0, visibleCount).map((post) => (
+                        <Tilt
+                            key={post.id}
+                            glareEnable={true}
+                            glareMaxOpacity={0.4}
+                            glareColor='white'
+                            glarePosition='all'
+                            scale={1.02}
+                            transitionSpeed={400}
+                            tiltMaxAngleX={8}
+                            tiltMaxAngleY={8}
+                        >
+                            <div className="glass-card floating-archive">
                                 <img
                                     src={post.image_url}
                                     alt={post.title}
@@ -132,10 +146,28 @@ export default function Home() {
                                     </Link>
                                 </div>
                             </div>
+                        </Tilt>
                         ))
                     )}
                 </div>
             )}
+
+            {/* Load More Button */}
+            {!isLoading && visibleCount < posts.length && (
+                <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+                    <button
+                        onClick={() => setVisibleCount(prev => prev + 6)}
+                        className='btn-miraland btn-gold'
+                        style={{ padding: '1rem 3rem', fontSize: '1.2rem', boxShadow: '0 8px 25px rgba(218, 165, 32, 0.4)' }}
+                    >
+                        ✨ Load More Archives
+                    </button>
+                </div>
+            )}
+
+
+
+
         </div>
     );
 }

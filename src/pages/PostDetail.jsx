@@ -4,7 +4,17 @@ import { supabase } from '../supabaseClient';
 import { useTranslation } from 'react-i18next';
 import { arenaData } from '../arenaData';
 
-export default function PostDetail() {
+const nationThemes = {
+        Apple: { bg: 'linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #f0f8ff 100%)', pink: '#ffb6c1', dark: '#ff69b4' },
+        Ruin: { bg: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)', pink: '#00f2fe', dark: '#4facfe' }, // Cyberpunk blues
+        Cloud: { bg: 'linear-gradient(135deg, #f1f8e9 0%, #dcedc8 50%, #c5e1a5 100%)', pink: '#aed581', dark: '#7cb342' }, // Jade greens
+        Pigeon: { bg: 'linear-gradient(135deg, #f3e5f5 0%, #e1bee7 50%, #ce93d8 100%)', pink: '#ba68c8', dark: '#8e24aa' }, // Royal purples
+        North: { bg: 'linear-gradient(135deg, #eceff1 0%, #cfd8dc 50%, #b0bec5 100%)', pink: '#90a4ae', dark: '#607d8b' }, // Ice and steel
+        Wasteland: { bg: 'linear-gradient(135deg, #fff8e1 0%, #ffecb3 50%, #ffe082 100%)', pink: '#ffd54f', dark: '#ffca28' }, // Desert golds
+        Lilith: { bg: 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%)', pink: '#f06292', dark: '#e91e63' }, // Fairy tale pinks
+}
+
+export default function PostDetail({ session }) {
     const { id } = useParams();
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
@@ -16,6 +26,7 @@ export default function PostDetail() {
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
+    const [hearts, setHearts] = useState([]);
 
     // 1. Fetch Post and Comment on load
     useEffect(() => {
@@ -53,10 +64,33 @@ export default function PostDetail() {
 
         if (!error) {
             setPost({ ...post, upvotes: newUpvoteCount });
+
+            // Magic Upvote Burst
+            const newHearts = Array.from({ length: 5 }).map((_, i) => ({
+                id: Date.now() + i, // Unique ID
+                left: Math.random() * 60 + 20, // Random horizontal spread
+                delay: Math.random() * 0.2 // Slight delay for a 'burst' effect
+            }));
+
+            setHearts([...hearts, ...newHearts]);
+
+            // Clean up the hearts from the DOM so it doesn't lag the browser
+            setTimeout(() => setHearts([]), 1500);
         }
     };
 
-    // 3. Comment Logic
+    // 3. Share Logic
+    const handleShare = async () => {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            setToastMessage("🔗 Link copied to clipboard!");
+            setTimeout(() => setToastMessage(''), 3000);
+        } catch (err) {
+            console.error("Failed to copy link ", err);
+        }
+    };
+
+    // 4. Comment Logic
     const handleAddComment = async (e) => {
         e.preventDefault();
         if (!newComment.trim()) return;
@@ -71,12 +105,13 @@ export default function PostDetail() {
         }
     };
 
-    // 4. Secret Key Delete Logic
+    // 5. Secure Delete Logic
     const handleDelete = async () => {
-        const userAttempt = window.prompt(t('detail.prompt_key'));
+        // Standard browser confirmation so users don't click it by accident
+        const confirmDelete = window.confirm("Are you sure you want to burn this archive?");
 
-        if(userAttempt == post.secret_key) {
-            // Delete image from storage to save space
+        if(confirmDelete) {
+            // Delete the image from storage to save space
             const fileName = post.image_url.split('/').pop();
             await supabase.storage.from('suit_images').remove([fileName]);
 
@@ -85,26 +120,38 @@ export default function PostDetail() {
 
             setToastMessage("🗑️ Archive Deleted.");
             setTimeout(() => navigate('/'), 2000);
-        } else {
-            alert(t('detail.wrong_key'));
         }
     };
+
+    // 6. Dynamic Nation Theming
+    useEffect(() => {
+        if (post && post.nation_flag && nationThemes[post.nation_flag]) {
+            const theme = nationThemes[post.nation_flag];
+
+            // Override the global CSS variables
+            document.body.style.background = theme.bg;
+            document.documentElement.style.setProperty('--nikki-pink', theme.pink);
+            document.documentElement.style.setProperty('--nikki-dark-pink', theme.dark);
+        }
+
+        // When the user leaves this page, reset to default
+        return () => {
+            document.body.style.background = 'linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #f0f8ff 100%)';
+            document.documentElement.style.setProperty('--nikki-pink', '#ffb6c1');
+            document.documentElement.style.setProperty('--nikki-dark-pink', '#ff69b4');
+        };
+    }, [post]);
 
     if (!post) return <h2 style={{ textAlign: 'center', padding: '2rem' }}>Loading Archive...</h2>;
 
-    // 5. Check Key and Enter Edit Mode
+    // 7. Enter Edit Mode
     const handleEditClick = () => {
-        const userAttempt = window.prompt(t('detail.prompt_key'));
-        if (userAttempt === post.secret_key) {
-            setEditTitle(post.title);
-            setEditContent(post.content);
-            setIsEditing(true); // Turn the page into edit mode
-        } else {
-            alert(t('detail.wrong_key'));
-        }
+        setEditTitle(post.title);
+        setEditContent(post.content);
+        setIsEditing(true);
     };
 
-    // 6. Save the Edited Data to Supabase
+    // 8. Save the Edited Data to Supabase
     const handleSaveEdit = async () => {
         const { error } = await supabase
             .from('lore_posts')
@@ -150,14 +197,16 @@ export default function PostDetail() {
                             {t('categories.' + post.category)} • {t('nations.' + post.nation_flag)}
                         </span>
 
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button onClick={handleEditClick} className="btn-miraland btn-gold" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}>
-                                ✏️ {t('detail.edit')}
-                            </button>
-                            <button onClick={handleDelete} className="btn-miraland btn-red" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}>
-                                🗑️ {t('detail.delete')}
-                            </button>
-                        </div>
+                        {session?.user?.id === post.user_id && (
+                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                <button onClick={handleEditClick} className="btn-miraland btn-gold" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}>
+                                    ✏️ {t('detail.edit')}
+                                </button>
+                                <button onClick={handleDelete} className="btn-miraland btn-red" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}>
+                                    🗑️ {t('detail.delete')}
+                                </button>
+                            </div>
+                        )}  
                     </div>
 
                     {/* CONDITIONAL RENDERING: Edit Mode vs View Mode */}
@@ -169,12 +218,14 @@ export default function PostDetail() {
                                 onChange={(e) => setEditTitle(e.target.value)}
                                 style={{ fontSize: '2rem', fontWeight: 'bold', padding: '0.5rem', width: '100%', fontFamily: 'Playfair Display, serif', color: '#ff69b4' }}
                             />
-                            <textarea
-                                value={editContent}
-                                onChange={(e) => setEditContent(e.target.value)}
-                                rows="8"
-                                style={{ padding: '1rem', width: '100%', fontFamily: 'inherit', lineHeight: '1.6' }}
-                            ></textarea>
+                            <div style={{ background: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px', overflow: 'hidden' }}>
+                                <textarea
+                                    value={editContent}
+                                    onChange={(e) => setEditContent(e.target.value)}
+                                    rows="8"
+                                    style={{ padding: '1rem', width: '100%', fontFamily:'inherit', lineHeight: '1.6' }}
+                                ></textarea>
+                            </div>
                             <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
                                 <button onClick={handleSaveEdit} className="btn-miraland btn-pink">
                                     ✅ {t('detail.save')}
@@ -187,7 +238,9 @@ export default function PostDetail() {
                     ) : (
                         <>
                         <h1 style={{ margin: '1.5rem 0 1rem 0', fontSize: '2.5rem', lineHeight: '1.2' }}>{post.title}</h1>
-                        <p style={{ lineHeight: '1.8', color: '#555', whiteSpace: 'pre-wrap', fontSize: '1.05rem' }}>{post.content}</p>
+                        <p style={{ lineHeight: '1.8', color: '#555', whiteSpace: 'pre-wrap', fontSize: '1.05rem' }}>
+                            {post.content}
+                        </p>
 
                         {post.theme_name && arenaData[post.theme_name] && (
                             <div style={{
@@ -209,9 +262,25 @@ export default function PostDetail() {
                             </div>
                         )}
 
-                        <div style={{ marginTop: 'auto', paddingTop: '2rem' }}>
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
                             <button onClick={handleUpvote} className="btn-miraland btn-pink" style={{ fontSize: '1.1rem', padding: '1rem 2rem', boxShadow: '0 8px 25px rgba(255, 105, 180, 0.4)' }}>
                                 💖 {post.upvotes} {t('detail.upvote')}
+                            </button>
+
+                            {/* Render the glass hearts */}
+                            {hearts.map(heart => (
+                                <span
+                                    key={heart.id}
+                                    className='glass-heart'
+                                    style={{
+                                        left: `${heart.left}%`,
+                                        top: '-10px',
+                                        animationDelay: `${heart.delay}s`
+                                    }}
+                                >💖</span>
+                            ))}
+                            <button onClick={handleShare} className="btn-miraland btn-gold" style={{ fontSize: '1.1rem', padding: '1rem 2rem' }}>
+                                🔗 Share
                             </button>
                         </div>
                     </>

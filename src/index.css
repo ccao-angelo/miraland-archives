@@ -231,3 +231,24 @@ input:focus, select:focus, textarea:focus {
     flex-wrap: wrap;
   }
 }
+
+/* GLASSMORPHISM FLOATING HEARTS */
+.glass-heart {
+  position: absolute;
+  font-size: 1.5rem;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  padding: 5px;
+  animation: floatUpAndFade 1.2s ease-out forwards;
+  z-index: 100;
+}
+
+@keyframes floatUpAndFade {
+  0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 1; }
+  50% { transform: translateY(-40px) scale(1.2) rotate(15deg); opacity: 0.8; }
+  100% { transform: translateY(-80px) scale(1) rotate(-15deg); opacity: 0; }
+}
