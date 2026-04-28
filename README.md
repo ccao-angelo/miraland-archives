@@ -4,7 +4,30 @@ Submitted by: **Chau Cao**
 
 This web app: **is a billingual, interactive guide and lore hub inspired by the game Ngôi Sao Thời Trang (Miracle Nikki). Users can seamlessly share and discover Arena guides, item lore, and styling competition entries in a gorgeous, glassmorphism-styled environment.**
 
-Time spent: **21.5** hours spent in total
+## Features Beyond the Standard Assignment
+
+This project goes above and beyond standard CRUD requirements by implementing professional-grade UI/UX, secure authentication, and optimized data handling.
+
+Time spent: **32.5** hours spent in total
+
+### Secure Authentication & Data Ownership
+- Upgraded from a basic "secret key" system to **Full Supabase Authentication**.
+- **Contextual UI:** Edit and Delete buttons are completely hidden and locked unless the currently logged-in user is the original author of the archive.
+
+### Immersive, Premium UI/UX
+- **Dynamic Nation Theming:** Context-aware styling that intercepts the database load and dynamically overrides global CSS variables, shifting the entire app's color palette and gradients to match the specific Miraland Nation of the viewed archive (e.g., Cyberpunk Blue for Ruin Island, Royal Purple for Pigeon Kingdom).
+- **Gacha Card Tilt & Shimmer:** Utilizes `react-parallax-tilt` to give the archive feed a premium trading-card feel, complete with 3D mouse tracking and a holographic glare overlay.
+- **Glassmorphism Particle Bursts:** A custom CSS keyframe animation system that spawns floating, frosted-glass hearts whenever a user clicks the "Resonate" (Upvote) button.
+
+### Optimized Architecture & Search
+- **Advanced Multilingual Search:** Built a custom algorithm (`removeAccents`) that normalizes both the database text and user input to flawlessly search Vietnamese characters and diacritics.
+- **Smart Client-Side Pagination:** Implemented a custom "Load More" architecture that strictly limits DOM rendering (6 cards at a time) to maintain blazing-fast performance, while still allowing the search function to query the entire downloaded database.
+- **Multi-language Support:** Fully integrated `react-i18next` for seamless English/Vietnamese localization.
+
+## Tech Stack
+- **Frontend:** React (V19), React Router, React-i18next, React-Parallax-Tilt
+- **Backend/Database:** Supabase (PostgreSQL, Auth, Storage)
+- **Styling:** Custom CSS3 (Glassmorphism, Keyframe Animations, Dynamic Variables)
 
 ## Required Features
 
